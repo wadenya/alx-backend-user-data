@@ -2,17 +2,17 @@
 """
 Main file
 """
-from user import User
+import requests
 
-print(User.__tablename__)
 
-for column in User.__table__.columns:
-    print("{}: {}".format(column, column.type))
-
-bob@dylan:~$ python3 main.py
-users
-users.id: INTEGER
-users.email: VARCHAR(250)
-users.hashed_password: VARCHAR(250)
-users.session_id: VARCHAR(250)
-users.reset_token: VARCHAR(250)
+def register_user(email: str, password: str) -> None:
+    """
+    Test for register a user with the given email and password
+    """
+    resp = requests.post('http://127.0.0.1:5000/users',
+                         data={'email': email, 'password': password})
+    if resp.status_code == 200:
+        assert (resp.json() == {"email": email, "message": "user created"})
+    else:
+        assert(resp.status_code == 400)
+        assert (resp.json() == {"message": "email already registered"})
