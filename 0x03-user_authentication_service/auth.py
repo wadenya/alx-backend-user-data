@@ -16,6 +16,7 @@ from user import User
 
 U = TypeVar(User)
 
+
 def _hash_password(password: str) -> bytes:
     """
     Hashes a password string and returns it in bytes form
@@ -53,8 +54,8 @@ class Auth:
 
     def valid_login(self, email: str, password: str) -> bool:
         """
-        Validate a user's login credentials and return True if they are correct
-        else False if they are not
+        Validate a user's login credentials and return True if
+        they are correct else False if they are not
         """
         try:
             user = self._db.find_user_by(email=email)
@@ -67,7 +68,7 @@ class Auth:
 
     def create_session(self, email: str) -> Union[None, str]:
         """
-        Create a session_id for an existing user and update the user's
+        Create session_id for existing user and update user's
         session_id attrib
         """
         try:
@@ -81,8 +82,8 @@ class Auth:
 
     def get_user_from_session_id(self, session_id: str) -> Union[None, U]:
         """
-        takes session_id and returns the corresponding user, if one exists,
-        else returns None
+        takes session_id and returns the corresponding user
+        if one exists, else returns None
         """
         if session_id is None:
             return None
@@ -96,7 +97,7 @@ class Auth:
 
     def destroy_session(self, user_id: int) -> None:
         """
-        Take a user_id and destroy that user's session 
+        Take a user_id and destroy that user's session
         update their session_id attribute to None
         """
         try:
