@@ -50,7 +50,7 @@ class DB:
         for k, v in kwargs.items():
             if k not in User.__dict__:
                 raise InvalidRequestError
-            for usre in all_users:
+            for usr in all_users:
                 if getattr(usr, k) == v:
                     return usr
         raise NoResultFound
