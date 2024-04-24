@@ -19,7 +19,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -51,19 +51,19 @@ class DB:
             if k not in User.__dict__:
                 raise InvalidRequestError
             for usre in all_users:
-                if getattr(usre, k) == v:
-                    return usre
+                if getattr(usr, k) == v:
+                    return usr
         raise NoResultFound
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Update a user's attributes"""
         try:
-            usre = self.find_user_by(id=user_id)
+            usr = self.find_user_by(id=user_id)
         except NoResultFound:
             raise ValueError()
         for k, v in kwargs.items():
-            if hasattr(usre, k):
-                setattr(usre, k, v)
+            if hasattr(usr, k):
+                setattr(usr, k, v)
             else:
                 raise ValueError
         self._session.commit()
